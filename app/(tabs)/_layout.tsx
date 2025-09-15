@@ -12,8 +12,8 @@ const TabIcon = ({ focused, icons, title }: any) => {
         source={images.highlight}
         style={tw`flex flex-row w-full flex-1 min-w-[112px] min-h-16 mt-4  justify-center items-center rounded-full overflow-hidden`}
       >
-        <Image source={icons} tintColor="#151312" style={tw`size-5`} />
-        <Text style={tw`text-purple-900 text-base font-semibold ml-2`}>
+        <Image source={icons} tintColor="#151312" style={tw`size-4`} />
+        <Text style={tw`text-purple-900 text-sm font-semibold ml-2`}>
           {title}
         </Text>
       </ImageBackground>
@@ -21,7 +21,7 @@ const TabIcon = ({ focused, icons, title }: any) => {
   } else {
     return (
       <View style={tw`size-full justify-center items-center mt-4 rounded-full`}>
-        <Image source={icons} tintColor="#A8B5DB" style={tw`size-5`} />
+        <Image source={icons} tintColor="#A8B5DB" style={tw`size-4`} />
       </View>
     );
   }
