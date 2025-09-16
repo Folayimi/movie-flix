@@ -1,11 +1,28 @@
 import { useEffect, useState } from "react";
 
-const useFetch = <T>(fetchFunction: () => Promise<T>, autoFetch = true) => {
+interface UseFetchResult<T> {
+  data: T | null;
+  loading: boolean;
+  error: Error | null;
+  refetch: () => Promise<void>;
+  reset: () => void;
+}
+
+interface UseFetchOptions {
+  reload: any;
+  autoFetch?: boolean;
+}
+
+const useFetch = <T>(
+  fetchFunction: () => Promise<T>,
+  reload?: UseFetchOptions["reload"],
+  autoFetch: UseFetchOptions["autoFetch"] = true,
+): UseFetchResult<T> => {
   const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const fetchData = async () => {
+  const fetchData = async (): Promise<void> => {
     try {
       setLoading(true);
       setError(null);
@@ -20,7 +37,7 @@ const useFetch = <T>(fetchFunction: () => Promise<T>, autoFetch = true) => {
     }
   };
 
-  const reset = () => {
+  const reset = (): void => {
     setData(null);
     setLoading(false);
     setError(null);
@@ -30,7 +47,7 @@ const useFetch = <T>(fetchFunction: () => Promise<T>, autoFetch = true) => {
     if (autoFetch) {
       fetchData();
     }
-  }, []);
+  }, [reload]);
 
   return { data, loading, error, refetch: fetchData, reset };
 };

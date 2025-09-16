@@ -129,7 +129,7 @@ const Login = () => {
         <Link href="/register" asChild>
           <TouchableOpacity>
             <Text style={tw`text-blue-500 underline mb-4`}>
-              Don't have an account? Sign Up
+              You do not have an account? Sign Up
             </Text>
           </TouchableOpacity>
         </Link>

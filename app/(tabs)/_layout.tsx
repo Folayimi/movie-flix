@@ -1,16 +1,26 @@
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
-import { Tabs } from "expo-router";
+import {
+  createMaterialTopTabNavigator,
+  MaterialTopTabBar,
+} from "@react-navigation/material-top-tabs";
+import { withLayoutContext } from "expo-router";
 import React from "react";
 import { Image, ImageBackground, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import tw from "twrnc";
+
+const { Navigator } = createMaterialTopTabNavigator();
+
+// 👇 Create a Tabs wrapper using MaterialTopTabs instead of BottomTabs
+export const Tabs = withLayoutContext(Navigator);
 
 const TabIcon = ({ focused, icons, title }: any) => {
   if (focused) {
     return (
       <ImageBackground
         source={images.highlight}
-        style={tw`flex flex-row w-full flex-1 min-w-[112px] min-h-16 mt-4  justify-center items-center rounded-full overflow-hidden`}
+        style={tw`flex flex-row w-full flex-1 min-w-[80px] min-h-[40px] mt-[-8px] ml-[-30px] justify-center items-center rounded-full overflow-hidden`}
       >
         <Image source={icons} tintColor="#151312" style={tw`size-4`} />
         <Text style={tw`text-purple-900 text-sm font-semibold ml-2`}>
@@ -20,35 +30,45 @@ const TabIcon = ({ focused, icons, title }: any) => {
     );
   } else {
     return (
-      <View style={tw`size-full justify-center items-center mt-4 rounded-full`}>
+      <View style={tw`size-full justify-center items-center rounded-full`}>
         <Image source={icons} tintColor="#A8B5DB" style={tw`size-4`} />
       </View>
     );
   }
 };
 
-const _Layout = () => {
+export default function Layout() {
   return (
     <Tabs
+      tabBarPosition="bottom"
+      tabBar={(props) => {
+        return (
+          <SafeAreaView
+            edges={["bottom"]} // 👈 only care about bottom safe area
+            style={{ backgroundColor: "transparent" }}
+          >
+            <View
+              style={{
+                position: "absolute",
+                bottom: 10,
+                left: 10,
+                right: 10,
+              }}
+            >
+              <MaterialTopTabBar {...props} />
+            </View>
+          </SafeAreaView>
+        );
+      }}
       screenOptions={{
+        swipeEnabled: true,
         tabBarShowLabel: false,
-        tabBarItemStyle: {
-          width: "100%",
-          height: "100%",
-          justifyContent: "center",
-          alignItems: "center",
+        tabBarStyle: {                  
+          backgroundColor: "#0f0D23",
+          borderRadius: 50,
+          height: 52,
+          overflow: "hidden",
         },
-        tabBarStyle: {
-            backgroundColor: "#0f0D23",
-            borderRadius: 50,
-            marginHorizontal: 10,
-            marginBottom: 10,
-            height:52,
-            position: 'absolute',
-            overflow:'hidden',
-            borderWidth:0,
-            borderColor: '0f0D23',
-        }
       }}
     >
       <Tabs.Screen
@@ -56,7 +76,7 @@ const _Layout = () => {
         options={{
           headerShown: false,
           title: "Home",
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({ focused }: { focused: boolean }) => (
             <TabIcon focused={focused} icons={icons.home} title="Home" />
           ),
         }}
@@ -66,7 +86,7 @@ const _Layout = () => {
         options={{
           headerShown: false,
           title: "Search",
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({ focused }: { focused: boolean }) => (
             <TabIcon focused={focused} icons={icons.search} title="Search" />
           ),
         }}
@@ -76,7 +96,7 @@ const _Layout = () => {
         options={{
           headerShown: false,
           title: "Saved",
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({ focused }: { focused: boolean }) => (
             <TabIcon focused={focused} icons={icons.save} title="Saved" />
           ),
         }}
@@ -86,13 +106,11 @@ const _Layout = () => {
         options={{
           headerShown: false,
           title: "Profile",
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({ focused }: { focused: boolean }) => (
             <TabIcon focused={focused} icons={icons.person} title="Profile" />
           ),
         }}
       />
     </Tabs>
   );
-};
-
-export default _Layout;
+}

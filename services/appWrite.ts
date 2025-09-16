@@ -45,7 +45,7 @@ export const getTrendingMovies = async (): Promise<
     if (trendingM.length > 0) {
       trendingM = trendingM.sort((a: any, b: any) => b.count - a.count);
       for (let i = 0; i < trendingM.length; i++) {
-        if (i < 4) {
+        if (i < 5) {
           trending.push(trendingM[i]);
         }
       }

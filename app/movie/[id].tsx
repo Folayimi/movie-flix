@@ -38,7 +38,7 @@ const Details = () => {
 
   if (loading)
     return (
-      <SafeAreaView style={tw`bg-primary flex-1`}>
+      <SafeAreaView style={tw`bg-blue-950 flex-1`}>
         <ActivityIndicator />
       </SafeAreaView>
     );
@@ -120,7 +120,7 @@ const Details = () => {
       </ScrollView>
 
       <TouchableOpacity
-        style={tw`absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50`}
+        style={tw`absolute bottom-5 left-0 right-0 mx-5 bg-purple-800 rounded-lg py-3.5 flex flex-row items-center justify-center z-50`}
         onPress={router.back}
       >
         <Image
