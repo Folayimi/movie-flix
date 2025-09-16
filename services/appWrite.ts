@@ -43,13 +43,13 @@ export const getTrendingMovies = async (): Promise<
     let trendingM:any[] = movies ? JSON.parse(movies) : [];    
     let trending: any = [];
     if (trendingM.length > 0) {
+      trendingM = trendingM.sort((a: any, b: any) => b.count - a.count);
       for (let i = 0; i < trendingM.length; i++) {
-        if (i < 5) {
+        if (i < 4) {
           trending.push(trendingM[i]);
         }
       }
-    }
-    trending = trending.sort((a: any, b: any) => b.count - a.count);
+    }    
     console.log("trending", trending);
     return trending as unknown as TrendingMovie[];
   } catch (error) {

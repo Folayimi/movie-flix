@@ -20,13 +20,10 @@ const Search = () => {
     reset,
   } = useFetch(() => fetchMovies({ query: searchQuery }), false);
 
-  useEffect(() => {    
+  useEffect(() => {
     const timeoutId = setTimeout(async () => {
       if (searchQuery.trim()) {
         await loadMovies();
-        if (movies?.length > 0 && movies?.[0]) {
-          await updateSearchCount(searchQuery, movies[0]);
-        }
       } else {
         reset();
       }
@@ -34,6 +31,12 @@ const Search = () => {
 
     return () => clearTimeout(timeoutId);
   }, [searchQuery]);
+
+  useEffect(() => {
+    if (movies?.length > 0 && movies?.[0]) {
+      updateSearchCount(searchQuery, movies[0]);
+    }
+  }, [movies]);
   return (
     <View style={tw`flex-1 bg-blue-950`}>
       <Image
