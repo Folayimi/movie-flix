@@ -8,7 +8,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { EyeIcon, EyeSlashIcon } from "react-native-heroicons/outline";
 import tw from "twrnc";
@@ -36,6 +36,7 @@ const Login = () => {
       // await userLogin(loginDetails, setPopUp, setModal);
       setTimeout(() => {
         setLoading(false);
+        setLoginDetails({ ...loginDetails, email: "", password: "" })
         router.push("/(tabs)");
       }, 2000);
     }
@@ -47,6 +48,8 @@ const Login = () => {
     // await googleAuthentication(setPopUp, setModal);
     setTimeout(() => {
       setGLoading(false);
+      setLoginDetails({ ...loginDetails, email: "", password: "" })
+      router.push("/(tabs)");
     }, 2000);
   };
 
@@ -75,13 +78,13 @@ const Login = () => {
           value={loginDetails.email}
           onChangeText={(text) => handleChange("email", text)}
           placeholderTextColor="gray"
-          style={tw`border-2 border-blue-800 text-white bg-transparent shadow-sm w-full p-3 mb-4 rounded-lg`}
+          style={tw`border-2 border-blue-800 text-white w-full p-3 mb-4 rounded-lg`}
         />
 
         {nextStep && (
           <View style={tw`w-full mb-4`}>
             <View
-              style={tw`flex-row border-2 border-blue-800 items-center text-white bg-transparent shadow-sm w-full px-3 mb-2 rounded-lg`}
+              style={tw`flex-row border-2 border-blue-800 items-center text-white bg-transparent w-full px-3 mb-2 rounded-lg`}
             >
               <TextInput
                 placeholder="Password"
@@ -89,14 +92,14 @@ const Login = () => {
                 value={loginDetails.password}
                 onChangeText={(text) => handleChange("password", text)}
                 placeholderTextColor="gray"
-                style={tw`flex-1 p-3 text-white`}
+                style={tw`flex-1 p-3 bg-transparent text-white`}
               />
               <TouchableOpacity onPress={() => setShowP(!showP)}>
                 {showP ? (
                   <EyeSlashIcon size={20} style={tw`text-white`} />
                 ) : (
-                  <EyeIcon size={20} style={tw`text-white`} />
-                )}
+                    <EyeIcon size={20} style={tw`text-white`} />
+                  )}
               </TouchableOpacity>
             </View>
 
@@ -115,8 +118,8 @@ const Login = () => {
           {loading ? (
             <ActivityIndicator color="blue" />
           ) : (
-            <Text style={tw`text-blue-950 font-semibold`}>Continue</Text>
-          )}
+              <Text style={tw`text-blue-950 font-semibold`}>Continue</Text>
+            )}
         </TouchableOpacity>
 
         {/* Divider */}

@@ -14,12 +14,14 @@ import {
   Image,
   RefreshControl,
   ScrollView,
-  Text,
-  View,
+
+  Text, TouchableOpacity,
+
+  View
 } from "react-native";
 import tw from "twrnc";
 
-export default function Index() {
+export default function Index() {  
   const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
   const [reload, setReload] = useState(false);
@@ -64,8 +66,12 @@ export default function Index() {
             titleColor="#000"
           />
         }
-      >
-        <Image source={icons.logo} style={tw`w-12 h-10 mt-20 mb-5 mx-auto`} />
+      >        
+          <TouchableOpacity onPress={()=>{
+            router.push("../")
+          }}>
+            <Image source={icons.logo} style={tw`w-12 h-10 mt-20 mb-5 mx-auto`} />
+          </TouchableOpacity>        
         {moviesLoading || trendingLoading ? (
           <ActivityIndicator
             size="large"
@@ -75,55 +81,55 @@ export default function Index() {
         ) : moviesError ? (
           <Text>Error: {moviesError?.message || trendingError?.message}</Text>
         ) : (
-          <View style={tw`flex-1 mt-5`}>
-            <SearchBar
-              onPress={() => {
-                router.push("/search");
-              }}
-              placeholder="Search for a movie, tv show, person..."
-            />
-            {trendingMovies && (
-              <View style={tw`mt-10`}>
-                <Text style={tw`text-lg text-white font-bold mb-3`}>
-                  Trending Movies
+              <View style={tw`flex-1 mt-5`}>
+                <SearchBar
+                  onPress={() => {
+                    router.push("/search");
+                  }}
+                  placeholder="Search for a movie, tv show, person..."
+                />
+                {trendingMovies && (
+                  <View style={tw`mt-10`}>
+                    <Text style={tw`text-lg text-white font-bold mb-3`}>
+                      Trending Movies
                 </Text>
+                  </View>
+                )}
+                <>
+                  <FlatList
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    ItemSeparatorComponent={() => <View style={tw`w-4`} />}
+                    data={trendingMovies}
+                    style={tw`mb-4 mt-3`}
+                    renderItem={({ item, index }) => (
+                      <TrendingCard movie={item} index={index} />
+                    )}
+                    keyExtractor={(item) => item.movie_id.toString()}
+                  />
+
+                  <Text style={tw`text-lg text-white font-bold mt-5 mb-3`}>
+                    Latest Movies
+              </Text>
+                  <FlatList
+                    data={movies}
+                    renderItem={({ item }) => {
+                      return <MovieCard {...item} />;
+                    }}
+                    keyExtractor={(item) => item.id.toString()}
+                    numColumns={3}
+                    columnWrapperStyle={{
+                      justifyContent: "flex-start",
+                      gap: 20,
+                      paddingRight: 5,
+                      marginBottom: 10,
+                    }}
+                    style={tw`mt-2 pb-32`}
+                    scrollEnabled={false}
+                  />
+                </>
               </View>
             )}
-            <>
-              <FlatList
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                ItemSeparatorComponent={() => <View style={tw`w-4`} />}
-                data={trendingMovies}
-                style={tw`mb-4 mt-3`}
-                renderItem={({ item, index }) => (
-                  <TrendingCard movie={item} index={index} />
-                )}
-                keyExtractor={(item) => item.movie_id.toString()}
-              />
-
-              <Text style={tw`text-lg text-white font-bold mt-5 mb-3`}>
-                Latest Movies
-              </Text>
-              <FlatList
-                data={movies}
-                renderItem={({ item }) => {
-                  return <MovieCard {...item} />;
-                }}
-                keyExtractor={(item) => item.id.toString()}
-                numColumns={3}
-                columnWrapperStyle={{
-                  justifyContent: "flex-start",
-                  gap: 20,
-                  paddingRight: 5,
-                  marginBottom: 10,
-                }}
-                style={tw`mt-2 pb-32`}
-                scrollEnabled={false}
-              />
-            </>
-          </View>
-        )}
       </ScrollView>
     </View>
   );

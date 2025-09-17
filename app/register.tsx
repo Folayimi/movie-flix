@@ -3,12 +3,12 @@ import { images } from "@/constants/images";
 import { Link, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-    ActivityIndicator,
-    Image,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from "react-native";
 import { EyeIcon, EyeSlashIcon } from "react-native-heroicons/outline";
 import tw from "twrnc";
@@ -93,14 +93,14 @@ const Register = () => {
           keyboardType="email-address"
           autoCapitalize="none"
           placeholderTextColor="gray"
-          style={tw`border-2 border-blue-800 text-white bg-transparent shadow-sm w-full p-3 mb-4 rounded-lg`}
+          style={tw`border-2 border-blue-800 text-white bg-transparent w-full p-3 mb-4 rounded-lg`}
         />
 
         {/* Password */}
         {nextStep && (
           <View style={tw`w-full`}>
             <View
-              style={tw`flex-row border-2 border-blue-800 items-center text-white bg-transparent shadow-sm w-full px-3 mb-2 rounded-lg`}
+              style={tw`flex-row border-2 border-blue-800 items-center text-white bg-transparent w-full px-3 mb-2 rounded-lg`}
             >
               <TextInput
                 placeholder="Password"

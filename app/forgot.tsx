@@ -8,7 +8,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import tw from "twrnc";
 // import { forgotPassword } from "../services/request";
@@ -66,7 +66,7 @@ const Forgot = () => {
           placeholder="Email address"
           value={email}
           onChangeText={setEmail}
-          style={tw`border-2 border-blue-800 text-white bg-transparent shadow-sm w-full p-3 mb-4 rounded-lg`}
+          style={tw`border-2 border-blue-800 text-white bg-transparent w-full p-3 mb-4 rounded-lg`}
           keyboardType="email-address"
           autoCapitalize="none"
           placeholderTextColor="gray"
